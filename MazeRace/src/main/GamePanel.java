@@ -18,13 +18,23 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	final int screenWidth = tileSize * maxScreenColumn; //768 pixels
 	final int screenHeight = tileSize * maxScreenRow; //576 pixels
 	
+	int framesPerSecond = 60; //Maximum FPS I want to use
+	
+	KeyHandler keyH = new KeyHandler(); //Instantiating KeyHandler class
 	Thread gameThread; //Thread for concurrency
+	
+	//Set players default position..
+	int playerX = 100;
+	int playerY = 100;
+	int playerSpeed = 4;
 	
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true); //Drawing is done in an offscreen painting buffer
+		this.addKeyListener(keyH); //Adds KeyHandler to GamePanel
+		this.setFocusable(true); //GamePanel can be focused to receive key inputs
 	}
 
 	public void startGameThread() {
@@ -35,20 +45,37 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	@Override
 	public void run() { //Implemented from thread for concurrency
 		
+		double drawInterval = 1000000000/framesPerSecond;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		
 		while(gameThread != null) { //While the game thread exists
 			
-			//System.out.println("The game loop is running..");
+			currentTime = System.nanoTime();
+			delta += (currentTime - lastTime) / drawInterval;
+			lastTime = currentTime;
 			
-			//UPDATE INFORMATION LIKE CHARACTER POS
+			if(delta >= 1) {
 			update();
-			//DRAW THE SCREEN WITH THE UPDATED INFORMATION
 			repaint(); //Calling this calls paintComponent method
-		}
+			delta--;
+			}
+			
+			}
 		
 	}
 	
 	public void update() {
-		
+		if(keyH.wPressed == true) {
+			playerY -= playerSpeed;
+		}else if(keyH.sPressed == true) {
+			playerY += playerSpeed;
+		}else if(keyH.aPressed == true) {
+			playerX -= playerSpeed;
+		}else if(keyH.dPressed == true) {
+			playerX += playerSpeed;
+		}
 	}
 	
 	public void paintComponent(Graphics g) { //JPanel standard method, graphics is built in too
@@ -57,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 		Graphics2D g2 = (Graphics2D)g;//Extends Graphics class for control over geometry, coordinates, colour and text layout
 		
 		g2.setColor(Color.white);
-		g2.fillRect(10, 10, tileSize, tileSize);
+		g2.fillRect(playerX, playerY, tileSize, tileSize);
 		g2.dispose();
 		
 	}

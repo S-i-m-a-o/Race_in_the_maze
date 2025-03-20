@@ -29,16 +29,16 @@ public class KeyHandler implements KeyListener{ //Listener interface for receivi
 		if(code == KeyEvent.VK_D) {
 			dPressed = true;
 		}
-		if(code == KeyEvent.VK_KP_UP) {
+		if(code == KeyEvent.VK_UP) {
 			upPressed = true;
 		}
-		if(code == KeyEvent.VK_KP_DOWN) {
+		if(code == KeyEvent.VK_DOWN) {
 			downPressed = true;
 		}
-		if(code == KeyEvent.VK_KP_LEFT) {
+		if(code == KeyEvent.VK_LEFT) {
 			leftPressed = true;
 		}
-		if(code == KeyEvent.VK_KP_RIGHT) {
+		if(code == KeyEvent.VK_RIGHT) {
 			rightPressed = true;
 		}
 		
@@ -60,16 +60,16 @@ public class KeyHandler implements KeyListener{ //Listener interface for receivi
 		if(code == KeyEvent.VK_D) {
 			dPressed = false;
 		}
-		if(code == KeyEvent.VK_KP_UP) {
+		if(code == KeyEvent.VK_UP) {
 			upPressed = false;
 		}
-		if(code == KeyEvent.VK_KP_DOWN) {
+		if(code == KeyEvent.VK_DOWN) {
 			downPressed = false;
 		}
-		if(code == KeyEvent.VK_KP_LEFT) {
+		if(code == KeyEvent.VK_LEFT) {
 			leftPressed = false;
 		}
-		if(code == KeyEvent.VK_KP_RIGHT) {
+		if(code == KeyEvent.VK_RIGHT) {
 			rightPressed = false;
 		}
 	}

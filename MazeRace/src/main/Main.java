@@ -11,14 +11,16 @@ public class Main {
 		window.setResizable(false); //The window cannot be resized
 		window.setTitle("Maze Race");
 		
-		GamePanel gamePanel = new GamePanel();
-		window.add(gamePanel);
+		GamePanel gamePanel = new GamePanel(); //GamePanel constructor
+		window.add(gamePanel); //gamePanel constructor is added to window
 		
 		window.pack(); //Causes window to be sized to fit preffered size and layout of its subcomponents
 		
 		window.setLocationRelativeTo(null); //Window is placed at the centre of the screen
 		window.setVisible(true); //Sets visibility to true, so we can actually see the window
 		
+		
+		gamePanel.startGameThread();
 		
 	}
 

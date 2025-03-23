@@ -24,13 +24,9 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	
 	KeyHandler keyH = new KeyHandler(); //Instantiating KeyHandler class
 	Thread gameThread; //Thread for concurrency
-	Player player = new Player(this,keyH); //Instantiating GamePanel and KeyHandler
-	Player player2 = new Player(this,keyH);
+	Player player = new Player(this,keyH, 10, 10, 3); //Instantiating GamePanel and KeyHandler
+	Player player2 = new Player(this,keyH, 100, 100, 3);
 	
-	//Set players default position..
-	int playerX = 100;
-	int playerY = 100;
-	int playerSpeed = 4;
 	
 	
 	public GamePanel() {
@@ -81,13 +77,15 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	}
 	
 	public void update() { //Update method
-		player.update();
+		player.updatePlayerOne();
+		player2.updatePlayerTwo();
 	}
 	
 	public void paintComponent(Graphics g) { //JPanel standard method, graphics is built in too
 		super.paintComponent(g); //Calls from JPanel..Subclass
 		Graphics2D g2 = (Graphics2D)g;
 		player.draw(g2);
+		player2.draw(g2);
 		g2.dispose();
 		
 	}

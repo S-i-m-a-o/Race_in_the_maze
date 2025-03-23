@@ -7,14 +7,16 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class GamePanel extends JPanel implements Runnable{ //This class inherits the JPanel class
 
 	//SCREEN SETTINGS
 	final int originalTileSize = 16; //16*16 tile for character / map tile etc..
-	final int scale = 1; //Scales the tiles / sprites *3 so it's not tiny on the screen..
-	final int tileSize = originalTileSize * scale; //48*48 pixel tiles
-	final int maxScreenColumn = 40; //16 Tiles wide
-	final int maxScreenRow = 40; //12 Tiles down
+	final int scale = 2; //Scales the tiles / sprites *3 so it's not tiny on the screen..
+	public final int tileSize = originalTileSize * scale; //48*48 pixel tiles
+	final int maxScreenColumn = 25; //16 Tiles wide
+	final int maxScreenRow = 25; //12 Tiles down
 	final int screenWidth = tileSize * maxScreenColumn; //768 pixels
 	final int screenHeight = tileSize * maxScreenRow; //576 pixels
 	
@@ -22,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	
 	KeyHandler keyH = new KeyHandler(); //Instantiating KeyHandler class
 	Thread gameThread; //Thread for concurrency
+	Player player = new Player(this,keyH); //Instantiating GamePanel and KeyHandler
+	Player player2 = new Player(this,keyH);
 	
 	//Set players default position..
 	int playerX = 100;
@@ -77,35 +81,13 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	}
 	
 	public void update() { //Update method
-		if(keyH.wPressed == true) { //This if block controls the player character..
-			playerY -= playerSpeed;
-		}else if(keyH.sPressed == true) {
-			playerY += playerSpeed;
-		}else if(keyH.aPressed == true) {
-			playerX -= playerSpeed;
-		}else if(keyH.dPressed == true) {
-			playerX += playerSpeed;
-		}
-		
-		else if(keyH.upPressed == true) { //This if block controls the player character too.. Need to figure out how to make two players..
-			playerY -= playerSpeed;
-		}else if(keyH.downPressed == true) {
-			playerY += playerSpeed;
-		}else if(keyH.leftPressed == true) {
-			playerX -= playerSpeed;
-		}else if(keyH.rightPressed == true) {
-			playerX += playerSpeed;
-		}
-		
+		player.update();
 	}
 	
 	public void paintComponent(Graphics g) { //JPanel standard method, graphics is built in too
 		super.paintComponent(g); //Calls from JPanel..Subclass
-		
-		Graphics2D g2 = (Graphics2D)g;//Extends Graphics class for control over geometry, coordinates, colour and text layout
-		
-		g2.setColor(Color.white);
-		g2.fillRect(playerX, playerY, tileSize, tileSize);
+		Graphics2D g2 = (Graphics2D)g;
+		player.draw(g2);
 		g2.dispose();
 		
 	}

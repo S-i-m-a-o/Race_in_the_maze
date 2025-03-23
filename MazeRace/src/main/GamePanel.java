@@ -49,25 +49,35 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 		double delta = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
+		long timer = 0;
+		int drawCount = 0;
 		
 		while(gameThread != null) { //While the game thread exists
 			
-			currentTime = System.nanoTime();
-			delta += (currentTime - lastTime) / drawInterval;
-			lastTime = currentTime;
+			currentTime = System.nanoTime(); //Gets the current system time
+			delta += (currentTime - lastTime) / drawInterval; //Delta increased by the current time - the last time it was checked
+			timer += (currentTime - lastTime); //Timer increased by the current time - the last time it was checked
+			lastTime = currentTime; //Sets last time to current time
 			
-			if(delta >= 1) {
+			if(delta >= 1) { //If the delta is greater than 1, we update and repaint
 			update();
 			repaint(); //Calling this calls paintComponent method
-			delta--;
+			delta--; //Delta is set back to 0
+			drawCount++; //Drawcount is increased
+			}
+			
+			if(timer >= 1000000000) {
+				System.out.println("Frames Per Second: " + drawCount); //Displays FPS
+				drawCount = 0; //Resets drawCount
+				timer = 0; //Resets Timer
 			}
 			
 			}
 		
 	}
 	
-	public void update() {
-		if(keyH.wPressed == true) {
+	public void update() { //Update method
+		if(keyH.wPressed == true) { //This if block controls the player character..
 			playerY -= playerSpeed;
 		}else if(keyH.sPressed == true) {
 			playerY += playerSpeed;
@@ -77,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 			playerX += playerSpeed;
 		}
 		
-		else if(keyH.upPressed == true) {
+		else if(keyH.upPressed == true) { //This if block controls the player character too.. Need to figure out how to make two players..
 			playerY -= playerSpeed;
 		}else if(keyH.downPressed == true) {
 			playerY += playerSpeed;

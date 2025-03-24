@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{ //This class inherits the JPanel class
 
@@ -15,17 +16,18 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	final int originalTileSize = 16; //16*16 tile for character / map tile etc..
 	final int scale = 2; //Scales the tiles / sprites *3 so it's not tiny on the screen..
 	public final int tileSize = originalTileSize * scale; //48*48 pixel tiles
-	final int maxScreenColumn = 25; //16 Tiles wide
-	final int maxScreenRow = 25; //12 Tiles down
-	final int screenWidth = tileSize * maxScreenColumn; //768 pixels
-	final int screenHeight = tileSize * maxScreenRow; //576 pixels
+	public final int maxScreenColumn = 36; //16 Tiles wide
+	public final int maxScreenRow = 24; //12 Tiles down
+	public final int screenWidth = tileSize * maxScreenColumn; //768 pixels
+	public final int screenHeight = tileSize * maxScreenRow; //576 pixels
 	
 	int framesPerSecond = 60; //Maximum FPS I want to use
 	
+	TileManager tileM = new TileManager(this);
 	KeyHandler keyH = new KeyHandler(); //Instantiating KeyHandler class
 	Thread gameThread; //Thread for concurrency
-	Player player = new Player(this,keyH, 10, 10, 3); //Instantiating GamePanel and KeyHandler
-	Player player2 = new Player(this,keyH, 100, 100, 3);
+	Player player = new Player(this,keyH, 32, 32, 3); //Instantiating GamePanel and KeyHandler
+	Player player2 = new Player(this,keyH, 1088, 704, 3);
 	
 	
 	
@@ -84,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	public void paintComponent(Graphics g) { //JPanel standard method, graphics is built in too
 		super.paintComponent(g); //Calls from JPanel..Subclass
 		Graphics2D g2 = (Graphics2D)g;
+		tileM.draw(g2);
 		player.draw(g2);
 		player2.draw(g2);
 		g2.dispose();

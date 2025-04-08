@@ -23,27 +23,27 @@ class PlayerTest {
     void testMoveUp() {
         keyHandler.wPressed = true;
         player.updatePlayerOne();
-        assertEquals(47, player.y); // Moves up (-3)
+        assertEquals(47, player.worldY); // Moves up (-3)
     }
 
     @Test
     void testMoveDown() {
         keyHandler.sPressed = true;
         player.updatePlayerOne();
-        assertEquals(53, player.y); // Moves down (+3)
+        assertEquals(53, player.worldY); // Moves down (+3)
     }
 
     @Test
     void testMoveLeft() {
         keyHandler.aPressed = true;
         player.updatePlayerOne();
-        assertEquals(47, player.x); // Moves left (-3)
+        assertEquals(47, player.worldX); // Moves left (-3)
     }
 
     @Test
     void testMoveRight() {
         keyHandler.dPressed = true;
         player.updatePlayerOne();
-        assertEquals(53, player.x); // Moves right (+3)
+        assertEquals(53, player.worldX); // Moves right (+3)
     }
 }

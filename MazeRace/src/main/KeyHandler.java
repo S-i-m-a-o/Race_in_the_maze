@@ -41,6 +41,12 @@ public class KeyHandler implements KeyListener{ //Listener interface for receivi
 		if(code == KeyEvent.VK_RIGHT) {
 			rightPressed = true;
 		}
+		if(code == KeyEvent.VK_M) {
+		   
+			Main.startMenu();
+			
+			
+		}
 		
 	}
 

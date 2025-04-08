@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	final int scale = 2; //Scales the tiles / sprites *3 so it's not tiny on the screen..
 	public final int tileSize = originalTileSize * scale; //48*48 pixel tiles
 	public final int maxScreenColumn = 36; //16 Tiles wide
-	public final int maxScreenRow = 24; //12 Tiles down
+	public final int maxScreenRow = 23; //12 Tiles down
 	public final int screenWidth = tileSize * maxScreenColumn; //768 pixels
 	public final int screenHeight = tileSize * maxScreenRow; //576 pixels
 	
@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{ //This class inherits
 	KeyHandler keyH = new KeyHandler(); //Instantiating KeyHandler class
 	Thread gameThread; //Thread for concurrency
 	Player player = new Player(this,keyH, 32, 32, 3); //Instantiating GamePanel and KeyHandler
-	Player player2 = new Player(this,keyH, 1088, 704, 3);
+	Player player2 = new Player(this,keyH, 1088, 671, 3);
 	
 	
 	

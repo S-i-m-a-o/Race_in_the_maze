@@ -1,7 +1,7 @@
 package entity;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -18,11 +18,16 @@ public class Player extends Entity {
 	public Player(GamePanel gp, KeyHandler keyH, int xpos, int ypos, int speedPlayer) {
 		this.gp = gp;
 		this.keyH = keyH;
-		this.x = xpos;
-		this.y = ypos;
+		this.worldX = xpos;
+		this.worldY = ypos;
 		this.speed = speedPlayer;
 		// setDefaultValues();
 		this.direction = "down";
+		solidArea =new Rectangle();
+		solidArea.x = 8;
+		solidArea.y = 12;
+		solidArea.height = 18;
+		solidArea.width = 17;
 		getPlayerImage();
 	}
 
@@ -54,17 +59,34 @@ public class Player extends Entity {
 
 			if (keyH.wPressed == true) { // This if block controls the player character..
 				direction = "up";
-				y -= speed;
 			} else if (keyH.sPressed == true) {
 				direction = "down";
-				y += speed;
 			} else if (keyH.aPressed == true) {
 				direction = "left";
-				x -= speed;
 			} else if (keyH.dPressed == true) {
 				direction = "right";
-				x += speed;
 			}
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			if(collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY -= speed;
+					break;
+				case "down":
+					worldY += speed;
+					break;
+				case "left":
+					worldX -= speed;
+					break;
+				case "right":
+					worldX += speed;
+					break;
+				}
+			}
+			
 			spriteCounter++;
 			if (spriteCounter > 12) {
 				if (spriteNumber == 1) {
@@ -83,18 +105,34 @@ public class Player extends Entity {
 			if (keyH.upPressed == true) { // This if block controls the player character too.. Need to figure out how to
 											// make two players..
 				direction = "up";
-				y -= speed;
 			} else if (keyH.downPressed == true) {
 				direction = "down";
-				y += speed;
 			} else if (keyH.leftPressed == true) {
 				direction = "left";
-				x -= speed;
 			} else if (keyH.rightPressed == true) {
 				direction = "right";
-				x += speed;
 			}
-
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			if(collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY -= speed;
+					break;
+				case "down":
+					worldY += speed;
+					break;
+				case "left":
+					worldX -= speed;
+					break;
+				case "right":
+					worldX += speed;
+					break;
+				}
+			}
+			
 			spriteCounter++;
 			if (spriteCounter > 12) {
 				if (spriteNumber == 1) {
@@ -147,7 +185,7 @@ public class Player extends Entity {
 			}
 			break;
 		}
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
 	}
 
 }

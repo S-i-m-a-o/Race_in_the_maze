@@ -6,6 +6,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 public class Main {
+	//.
 	
 	static JFrame window = new JFrame();
 	static MenuPanel menuPanel = new MenuPanel(); 

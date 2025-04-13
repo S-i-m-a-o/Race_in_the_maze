@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class CollisionCheckerTest {
 
 	@Test
-	void test() {
+	void testCheckTile() {
 		fail("Not yet implemented");
 	}
 

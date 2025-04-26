@@ -66,6 +66,14 @@ public class Main {
 
 		
 	}
+	public static void resumeGame() {
+	    menuPanel.setVisible(false);
+	    if (gamePanel != null) {
+	        gamePanel.setVisible(true);
+	        gamePanel.requestFocus();
+	    }
+	    window.pack();
+	}
 	
 	
 	

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.JColorChooser;
 
 public class MenuPanel extends JPanel {
 
@@ -58,6 +59,22 @@ public class MenuPanel extends JPanel {
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.closeMenu();
+            }
+        });
+
+        // ==== CHANGE BACKGROUND COLOR BUTTON ====
+        Button changeBgColorButton = new Button("Change Background Color");
+        changeBgColorButton.setBounds(screenWidth / 2 - 75, screenHeight / 2 + 60, 150, 40); // Below Close button
+        setupButtonHoverEffect(changeBgColorButton);
+        this.add(changeBgColorButton);
+
+        changeBgColorButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Open color chooser and set the background color to the selected color
+                Color newColor = JColorChooser.showDialog(null, "Choose Background Color", getBackground());
+                if (newColor != null) {
+                    setBackground(newColor); // Set the new background color for the menu
+                }
             }
         });
     }

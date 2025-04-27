@@ -8,7 +8,9 @@ import java.awt.Rectangle;
 import org.junit.jupiter.api.Test;
 
 import entity.Entity;
+
 import entity.Player;
+
 
 class CollisionCheckerTest {
 

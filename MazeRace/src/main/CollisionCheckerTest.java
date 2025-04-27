@@ -50,40 +50,74 @@ class CollisionCheckerTest {
         
         
         //This test passes because the tile directly south of it has its collision on.
-        GamePanel leftSide = new GamePanel();
-        Entity leftSideEntity = new Entity();
-        leftSideEntity.worldX = 6*gp.tileSize;
-        leftSideEntity.worldY = 11*gp.tileSize;
-        leftSideEntity.solidArea = new Rectangle(0,0,32,32);
-        leftSideEntity.direction = "down";
-        CollisionChecker leftSideChecker = new CollisionChecker(leftSide);;
-        leftSideChecker.checkTile(leftSideEntity);
-        assertTrue(leftSideEntity.collisionOn);
+        GamePanel leftSideDown = new GamePanel();
+        Entity leftSideEntityDown = new Entity();
+        leftSideEntityDown.worldX = 6*gp.tileSize;
+        leftSideEntityDown.worldY = 11*gp.tileSize;
+        leftSideEntityDown.solidArea = new Rectangle(0,0,32,32);
+        leftSideEntityDown.direction = "down";
+        CollisionChecker leftSideChecker = new CollisionChecker(leftSideDown);;
+        leftSideChecker.checkTile(leftSideEntityDown);
+        assertTrue(leftSideEntityDown.collisionOn);
         
         
         //This test passes because the tile directly south has its collision off. (invisible wall)
-        GamePanel middle = new GamePanel();
-        Entity middleEntity = new Entity();
-        middleEntity.worldX = 6*gp.tileSize;
-        middleEntity.worldY = 12*gp.tileSize;
-        middleEntity.solidArea = new Rectangle(0,0,32,32);
-        middleEntity.direction = "down";
-        CollisionChecker middleChecker = new CollisionChecker(middle);
-        middleChecker.checkTile(middleEntity);
-        assertFalse(middleEntity.collisionOn);
+        GamePanel middleDown = new GamePanel();
+        Entity middleEntityDown = new Entity();
+        middleEntityDown.worldX = 7*gp.tileSize;
+        middleEntityDown.worldY = 11*gp.tileSize;
+        middleEntityDown.solidArea = new Rectangle(1,1,30,30);
+        middleEntityDown.direction = "down";
+        CollisionChecker middleCheckerDown = new CollisionChecker(middleDown);
+        middleCheckerDown.checkTile(middleEntityDown);
+        assertFalse(middleEntityDown.collisionOn);
         
         
         //This test passes because the tile directly south has its collision on.
-        GamePanel rightSide = new GamePanel();
-        Entity rightSideEntity = new Entity();
-        rightSideEntity.worldX = 6*gp.tileSize;
-        rightSideEntity.worldY = 13*gp.tileSize;
-        rightSideEntity.solidArea = new Rectangle(0,0,32,32);
-        rightSideEntity.direction = "down";
-        CollisionChecker rightSideChecker = new CollisionChecker(rightSide);
-        rightSideChecker.checkTile(rightSideEntity);
-        assertTrue(rightSideEntity.collisionOn);
-
+        GamePanel rightSideDown = new GamePanel();
+        Entity rightSideEntityDown = new Entity();
+        rightSideEntityDown.worldX = 8*gp.tileSize;
+        rightSideEntityDown.worldY = 11*gp.tileSize;
+        rightSideEntityDown.solidArea = new Rectangle(0,0,32,32);
+        rightSideEntityDown.direction = "down";
+        CollisionChecker rightSideChecker = new CollisionChecker(rightSideDown);
+        rightSideChecker.checkTile(rightSideEntityDown);
+        assertTrue(rightSideEntityDown.collisionOn);
+        
+        
+        //This test passes because the tile directly it resides on has its collision on.
+        GamePanel leftSideUp = new GamePanel();
+        Entity leftSideEntityUp = new Entity();
+        leftSideEntityUp.worldX = 6*gp.tileSize;
+        leftSideEntityUp.worldY = 12*gp.tileSize;
+        leftSideEntityUp.solidArea = new Rectangle(0,0,32,32);
+        leftSideEntityUp.direction = "up";
+        CollisionChecker leftSideCheckerUp = new CollisionChecker(leftSideUp);;
+        leftSideCheckerUp.checkTile(leftSideEntityUp);
+        assertTrue(leftSideEntityUp.collisionOn);
+       
+        //This test passes because the tile directly north has its collision off. (invisible wall)
+        GamePanel middleUp = new GamePanel();
+        Entity middleEntityUp = new Entity();
+        middleEntityUp.worldX = 7*gp.tileSize;
+        middleEntityUp.worldY = 13*gp.tileSize;
+        middleEntityUp.solidArea = new Rectangle(0,0,32,32);
+        middleEntityUp.direction = "up";
+        CollisionChecker middleCheckerUp = new CollisionChecker(middleUp);
+        middleCheckerUp.checkTile(middleEntityUp);
+        assertFalse(middleEntityUp.collisionOn);
+        
+        //This test passes because the tile directly north has its collision on.
+        GamePanel rightSideUp = new GamePanel();
+        Entity rightSideEntityUp = new Entity();
+        rightSideEntityUp.worldX = 8*gp.tileSize;
+        rightSideEntityUp.worldY = 13*gp.tileSize;
+        rightSideEntityUp.solidArea = new Rectangle(0,0,32,32);
+        rightSideEntityUp.direction = "down";
+        CollisionChecker rightSideCheckerUp = new CollisionChecker(rightSideUp);
+        rightSideCheckerUp.checkTile(rightSideEntityUp);
+        assertTrue(rightSideEntityUp.collisionOn);
+        
        
     }
 }

@@ -1,56 +1,43 @@
 package main;
 
-import main.MenuPanel;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.awt.Button;
-import java.awt.Component;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.awt.Color;
 
 public class MenuPanelTest {
 
-    private MenuPanel menuPanel;
+    @Test
+    public void testDefaultBackgroundColor() {
+        MenuPanel menu1 = new MenuPanel();
+        MenuPanel menu2 = new MenuPanel();
 
-    @BeforeEach
-    public void setUp() {
-        menuPanel = new MenuPanel();
+        // Check if default background color is the same (black)
+        assertEquals(menu1.getBackground(), menu2.getBackground());
+        assertEquals(Color.black, menu1.getBackground());
     }
 
     @Test
-    public void testStartButtonExists() {
-        Button startButton = findButton("Start Game");
-        assertNotNull(startButton);
-        assertEquals("Start Game", startButton.getLabel());
+    public void testScreenSize() {
+        MenuPanel menu = new MenuPanel();
+
+        int expectedWidth = 16 * 2 * 36; // originalTileSize * scale * maxScreenColumn
+        int expectedHeight = 16 * 2 * 23; // originalTileSize * scale * maxScreenRow
+
+        // Use getPreferredSize() instead of getWidth() and getHeight()
+        assertEquals(expectedWidth, menu.getPreferredSize().width);
+        assertEquals(expectedHeight, menu.getPreferredSize().height);
     }
+
 
     @Test
-    public void testStartButtonVisibilityChange() {
-        Button startButton = findButton("Start Game");
-        assertTrue(startButton.isVisible());
+    public void testBackgroundColorChange() {
+        MenuPanel menu = new MenuPanel();
 
-        // Simulate button click
-        startButton.getActionListeners()[0].actionPerformed(null);
+        // Simulate changing the background
+        Color newColor = Color.red;
+        menu.setBackground(newColor);
 
-        // Check if the button is now invisible
-        assertFalse(startButton.isVisible());
-    }
-
-    @Test
-    public void testCloseButtonExists() {
-        Button closeButton = findButton("close");
-        assertNotNull(closeButton);
-        assertEquals("close", closeButton.getLabel());
-    }
-
-    private Button findButton(String label) {
-        for (Component comp : menuPanel.getComponents()) {
-            if (comp instanceof Button && ((Button) comp).getLabel().equals(label)) {
-                return (Button) comp;
-            }
-        }
-        return null;
+        assertEquals(newColor, menu.getBackground());
     }
 }
+

@@ -1,4 +1,5 @@
 package entity;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -12,180 +13,128 @@ import main.KeyHandler;
 
 public class Player extends Entity {
 
-	GamePanel gp;
-	KeyHandler keyH;
+    GamePanel gp;
+    KeyHandler keyH;
 
-	public Player(GamePanel gp, KeyHandler keyH, int xpos, int ypos, int speedPlayer) {
-		this.gp = gp;
-		this.keyH = keyH;
-		this.worldX = xpos;
-		this.worldY = ypos;
-		this.speed = speedPlayer;
-		// setDefaultValues();
-		this.direction = "down";
-		solidArea =new Rectangle();
-		solidArea.x = 8;
-		solidArea.y = 12;
-		solidArea.height = 18;
-		solidArea.width = 17;
-		getPlayerImage();
-	}
+    public Player(GamePanel gp, KeyHandler keyH, int xpos, int ypos, int speedPlayer) {
+        this.gp = gp;
+        this.keyH = keyH;
+        this.worldX = xpos;
+        this.worldY = ypos;
+        this.speed = speedPlayer;
+        this.direction = "down";
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 12;
+        solidArea.height = 18;
+        solidArea.width = 17;
+        getPlayerImage();
+    }
 
-	/*
-	 * public void setDefaultValues() { x = 100; y = 100; speed = 2; direction =
-	 * "down"; }
-	 */
-	public void getPlayerImage() {
+    public void getPlayerImage() {
+        try {
+            up1 = ImageIO.read(getClass().getResource("/player/WalkUp1.png"));
+            up2 = ImageIO.read(getClass().getResource("/player/WalkUp2.png"));
+            down1 = ImageIO.read(getClass().getResource("/player/WalkDown1.png"));
+            down2 = ImageIO.read(getClass().getResource("/player/WalkDown2.png"));
+            left1 = ImageIO.read(getClass().getResource("/player/WalkLeft1.png"));
+            left2 = ImageIO.read(getClass().getResource("/player/WalkLeft2.png"));
+            right1 = ImageIO.read(getClass().getResource("/player/WalkRight1.png"));
+            right2 = ImageIO.read(getClass().getResource("/player/WalkRight2.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-		try {
+    public void updatePlayerOne() {
+        if (keyH.wPressed || keyH.aPressed || keyH.sPressed || keyH.dPressed) {
+            if (keyH.wPressed) direction = "up";
+            else if (keyH.sPressed) direction = "down";
+            else if (keyH.aPressed) direction = "left";
+            else if (keyH.dPressed) direction = "right";
 
-			up1 = ImageIO.read(getClass().getResource("/player/WalkUp1.png"));
-			up2 = ImageIO.read(getClass().getResource("/player/WalkUp2.png"));
-			down1 = ImageIO.read(getClass().getResource("/player/WalkDown1.png"));
-			down2 = ImageIO.read(getClass().getResource("/player/WalkDown2.png"));
-			left1 = ImageIO.read(getClass().getResource("/player/WalkLeft1.png"));
-			left2 = ImageIO.read(getClass().getResource("/player/WalkLeft2.png"));
-			right1 = ImageIO.read(getClass().getResource("/player/WalkRight1.png"));
-			right2 = ImageIO.read(getClass().getResource("/player/WalkRight2.png"));
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            if (!collisionOn) {
+                switch (direction) {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
 
-	public void updatePlayerOne() {
+            // Check if the player reached the goal tile (tile number 2)
+            int tileX = worldX / gp.tileSize;  // Get the tile X coordinate
+            int tileY = worldY / gp.tileSize;  // Get the tile Y coordinate
 
-		if (keyH.wPressed == true || keyH.aPressed == true || keyH.sPressed == true || keyH.dPressed == true) {
+            // Make sure player is within the tile's bounds
+            if (gp.tileM.mapTileNumber[tileX][tileY] == 2) {
+                if (!gp.gameOver) {
+                    gp.gameOver = true;
+                    gp.showWinMessage = true;  // Set flag to show win message
+                    System.out.println("You Win!");
+                }
+            }
 
-			if (keyH.wPressed == true) { // This if block controls the player character..
-				direction = "up";
-			} else if (keyH.sPressed == true) {
-				direction = "down";
-			} else if (keyH.aPressed == true) {
-				direction = "left";
-			} else if (keyH.dPressed == true) {
-				direction = "right";
-			}
-			
-			collisionOn = false;
-			gp.cChecker.checkTile(this);
-			
-			if(collisionOn == false) {
-				switch(direction) {
-				case "up":
-					worldY -= speed;
-					break;
-				case "down":
-					worldY += speed;
-					break;
-				case "left":
-					worldX -= speed;
-					break;
-				case "right":
-					worldX += speed;
-					break;
-				}
-			}
-			
-			spriteCounter++;
-			if (spriteCounter > 12) {
-				if (spriteNumber == 1) {
-					spriteNumber = 2;
-				} else if (spriteNumber == 2) {
-					spriteNumber = 1;
-				}
-				spriteCounter = 0;
-			}
-		}
-	}
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                spriteNumber = spriteNumber == 1 ? 2 : 1;
+                spriteCounter = 0;
+            }
+        }
+    }
 
-	public void updatePlayerTwo() {
-		if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
-				|| keyH.rightPressed == true) {
-			if (keyH.upPressed == true) { // This if block controls the player character too.. Need to figure out how to
-											// make two players..
-				direction = "up";
-			} else if (keyH.downPressed == true) {
-				direction = "down";
-			} else if (keyH.leftPressed == true) {
-				direction = "left";
-			} else if (keyH.rightPressed == true) {
-				direction = "right";
-			}
-			
-			collisionOn = false;
-			gp.cChecker.checkTile(this);
-			
-			if(collisionOn == false) {
-				switch(direction) {
-				case "up":
-					worldY -= speed;
-					break;
-				case "down":
-					worldY += speed;
-					break;
-				case "left":
-					worldX -= speed;
-					break;
-				case "right":
-					worldX += speed;
-					break;
-				}
-			}
-			
-			spriteCounter++;
-			if (spriteCounter > 12) {
-				if (spriteNumber == 1) {
-					spriteNumber = 2;
-				} else if (spriteNumber == 2) {
-					spriteNumber = 1;
-				}
-				spriteCounter = 0;
-			}
-		}
-	}
+    public void updatePlayerTwo() {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            if (keyH.upPressed) direction = "up";
+            else if (keyH.downPressed) direction = "down";
+            else if (keyH.leftPressed) direction = "left";
+            else if (keyH.rightPressed) direction = "right";
 
-	public void draw(Graphics2D g2) {
-		// g2.setColor(Color.white);
-		// g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
 
-		BufferedImage image = null;
+            if (!collisionOn) {
+                switch (direction) {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
 
-		switch (direction) {
-		case "up":
-			if (spriteNumber == 1) {
-				image = up1;
-			}
-			if (spriteNumber == 2) {
-				image = up2;
-			}
-			break;
-		case "down":
-			if (spriteNumber == 1) {
-				image = down1;
-			}
-			if (spriteNumber == 2) {
-				image = down2;
-			}
-			break;
-		case "left":
-			if (spriteNumber == 1) {
-				image = left1;
-			}
-			if (spriteNumber == 2) {
-				image = left2;
-			}
-			break;
-		case "right":
-			if (spriteNumber == 1) {
-				image = right1;
-			}
-			if (spriteNumber == 2) {
-				image = right2;
-			}
-			break;
-		}
-		g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
-	}
+            // Check if player 2 reached the goal tile
+            int tileX = worldX / gp.tileSize;  // Get the tile X coordinate
+            int tileY = worldY / gp.tileSize;  // Get the tile Y coordinate
 
+            // Make sure player is within the tile's bounds
+            if (gp.tileM.mapTileNumber[tileX][tileY] == 2) {
+                if (!gp.gameOver) {
+                    gp.gameOver = true;
+                    gp.showWinMessage = true;
+                    System.out.println("Player 2 Wins!");
+                }
+            }
+
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                spriteNumber = spriteNumber == 1 ? 2 : 1;
+                spriteCounter = 0;
+            }
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage image = null;
+        switch (direction) {
+            case "up": image = spriteNumber == 1 ? up1 : up2; break;
+            case "down": image = spriteNumber == 1 ? down1 : down2; break;
+            case "left": image = spriteNumber == 1 ? left1 : left2; break;
+            case "right": image = spriteNumber == 1 ? right1 : right2; break;
+        }
+        g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
+    }
 }
+

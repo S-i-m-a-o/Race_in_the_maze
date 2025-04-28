@@ -1,71 +1,40 @@
 package main;
 
-import java.awt.Button;
-import java.awt.CardLayout;
-
 import javax.swing.JFrame;
 
 public class Main {
-	
-	static JFrame window = new JFrame();
-	static MenuPanel menuPanel = new MenuPanel(); 
-	static 	GamePanel gamePanel ;
-	public static void main(String[]args) {
-		
-		
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Lets the window properly close when the 'x' is clicked
-		window.setResizable(false); //The window cannot be resized
-		window.setTitle("Maze Race");
-		
-			//GamePanel constructor
-		
-		window.add(menuPanel);
-	//	window.add(menuPanel); //gamePanel constructor is added to window
-		window.pack(); //Causes window to be sized to fit preffered size and layout of its subcomponents
-		
-		
-		window.setLocationRelativeTo(null); //Window is placed at the centre of the screen
-		window.setVisible(true); //Sets visibility to true, so we can actually see the window
-	
-		
-	}
-	
-	public static void startGame() {
+    
+    static JFrame window = new JFrame();
+    static MenuPanel menuPanel = new MenuPanel();
+    static GamePanel gamePanel;
 
-		menuPanel.setVisible(false);
+    public static void main(String[] args) {
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Proper window close
+        window.setResizable(false); // Window cannot be resized
+        window.setTitle("Maze Race");
 
-	    
-	     gamePanel = new GamePanel(); 
-	    window.add(gamePanel);
-		gamePanel.startGameThread();
-		gamePanel.requestFocus();
-		window.pack();
-		
-	}
-	
-	public static void startMenu(){
-		menuPanel.setVisible(true);
-		//gamePanel.setVisible(false);
-		
-		
-		menuPanel.requestFocus();
-		window.pack();
-		
-		
-	}
-	
-	public static void closeMenu(){
-		menuPanel.setVisible(false);
+        // Initialize and display menu
+        window.add(menuPanel);
+        window.pack();
+        window.setLocationRelativeTo(null); // Center the window
+        window.setVisible(true); // Make window visible
+    }
 
-	    
-	     gamePanel = new GamePanel(); 
+    public static void startGame() {
+        menuPanel.setVisible(false);  // Hide menu
+        gamePanel = new GamePanel();  // Create game panel
+        window.add(gamePanel);  // Add game panel to the window
+        gamePanel.startGameThread();  // Start game thread
+        gamePanel.requestFocus();  // Give game panel focus
+        window.pack();
+    }
 
-		gamePanel.requestFocus();
-		window.pack();
-		
-		
-	}
-	
-	
-	
+    public static void startMenu() {
+        menuPanel.setVisible(true);  // Show the main menu
+        if (gamePanel != null) {
+            gamePanel.setVisible(false);  // Hide game panel
+        }
+        window.add(menuPanel);  // Add menu panel to window
+        window.pack();
+    }
 }

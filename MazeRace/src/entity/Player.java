@@ -65,11 +65,11 @@ public class Player extends Entity {
                 }
             }
 
-            // Check if the player reached the goal tile (tile number 2)
-            int tileX = worldX / gp.tileSize;  // Get the tile X coordinate
-            int tileY = worldY / gp.tileSize;  // Get the tile Y coordinate
+            // Adjust the tile coordinates for the exact position of the player
+            int tileX = (worldX + solidArea.x) / gp.tileSize;  // Adjust based on solidArea position
+            int tileY = (worldY + solidArea.y) / gp.tileSize;
 
-            // Make sure player is within the tile's bounds
+            // Check if the player reached the goal tile (tile number 2)
             if (gp.tileM.mapTileNumber[tileX][tileY] == 2) {
                 if (!gp.gameOver) {
                     gp.gameOver = true;
@@ -105,11 +105,11 @@ public class Player extends Entity {
                 }
             }
 
-            // Check if player 2 reached the goal tile
-            int tileX = worldX / gp.tileSize;  // Get the tile X coordinate
-            int tileY = worldY / gp.tileSize;  // Get the tile Y coordinate
+            // Adjust the tile coordinates for the exact position of player 2
+            int tileX = (worldX + solidArea.x) / gp.tileSize;  // Adjust based on solidArea position
+            int tileY = (worldY + solidArea.y) / gp.tileSize;
 
-            // Make sure player is within the tile's bounds
+            // Check if player 2 reached the goal tile
             if (gp.tileM.mapTileNumber[tileX][tileY] == 2) {
                 if (!gp.gameOver) {
                     gp.gameOver = true;
@@ -137,4 +137,5 @@ public class Player extends Entity {
         g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
     }
 }
+
 

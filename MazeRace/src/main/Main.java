@@ -58,7 +58,7 @@ public class Main {
 	public static void closeMenu(){
 		menuPanel.setVisible(false);
 
-		gamePanel = new GamePanel(); 
+		
 		window.add(gamePanel); // <- this was missing
 		gamePanel.startGameThread();
 		gamePanel.requestFocus();
